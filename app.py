@@ -21,25 +21,33 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         global userinfo
+        global successreg
+        global failurereg
         userinfo = {form.username.data:{'username':form.username.data, 'password':form.password.data, 'phone_number':form.phone_number.data}}
-        flash(f'Success!  Account created for {form.username.data}!', 'success')
-        return redirect(url_for('login'))
-    return render_template('register.html', title='Register', form=form)
+        successreg = 'Success you have been successfully registered!'
+        return render_template('register.html', title='Register', form=form, successreg=successreg)
+    else:
+        failurereg = 'Failure to register.  Please complete the required fields appropriately'
+        return render_template('register.html', title='Register', form=form, failurereg=failurereg)
 
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     global userinfo
+    global failurelogin
+    global successlogin
     session.pop('user', None)
     if form.validate_on_submit():
         if form.phone_number.data == userinfo[form.username.data]['phone_number'] and form.password.data == userinfo[form.username.data]['password']:
             session['user'] = form.username.data
-            flash('You have been logged in!', 'success')
-            return redirect(url_for('spellcheck'))
+            successlogin = 'Success  You have been logged in!'
+            return render_template('login.html', title='Login', form=form, successlogin=successlogin)
         else:
-            flash('Login failure. Please check username, password or 2fa', 'danger')
-    return render_template('login.html', title='Login', form=form)
+            failurelogin = 'Failure Incorrect username, password or Two-Factor'
+            return render_template('login.html', title='Login', form=form, failurelogin=failurelogin)
+    else:
+        return render_template('login.html', title='Login', form=form)
 
 
 @app.route("/logout", methods=['GET'])
@@ -66,11 +74,11 @@ def spellcheck():
             spellcheck_file = open("resultsfile.txt","w")
             spellcheck_file.write(spellcheck_results)
             spellcheck_file.close()
-            flash(f'Text below successfully submitted:', 'success')
-            flash(f'"{input_text}"', 'success')
-            return render_template('results.html', title='Spell Checker Results', spellcheck_results=spellcheck_results)
-        return render_template('spellcheck.html', title='Spell Checker', form=form)
-    return redirect(url_for('login'))
+            return render_template('spell_check.html', title='Spell Checker Results', form=form, spellcheck_results=spellcheck_results, input_text=input_text)
+        else:
+            return render_template('spell_check.html', title='Spell Checker', form=form)
+    else:
+        return redirect(url_for('login'))
 
 
 @app.before_request

@@ -2,7 +2,7 @@
 {% extends "layout.html" %}
 {% block content %}
     <div class="content-section">
-        <form method="POST" action="">
+        <form id="inputtext" method="POST" action="">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Michael's Amazing Spell Checker</legend>
@@ -24,6 +24,7 @@
                 {{ form.submit(class="btn btn-outline-info") }}
             </div>
         </form>
-        <p>{{spellcheck_results}}</p>
+        <p id="textout">Your text has been successfully submitted: <b>{{input_text}}</b></p>
+        <p id="misspelled">Your mispelled words: <b><font color="red">{{spellcheck_results}}</font></b></p>
     </div>
 {% endblock content %}
