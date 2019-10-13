@@ -15,9 +15,7 @@
                             {% endfor %}
                         </div>
                     {% else %}
-                        <div>
-                            <p id="uname">{{ form.username(class="form-control form-control-lg") }}</p>
-                        </div>                        
+                        {{ form.username(class="form-control form-control-lg") }}                   
                     {% endif %}
                 </div>
                 <div class="form-group">
@@ -30,9 +28,7 @@
                             {% endfor %}
                         </div>
                     {% else %}
-                        <div>
-                            <p id="pword">{{ form.password(class="form-control form-control-lg") }}</p>
-                        </div> 
+                        {{ form.password(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
                 <div class="form-group">
@@ -45,9 +41,7 @@
                             {% endfor %}
                         </div>
                     {% else %}
-                        <div>
-                            <p id="2fa">{{ form.phone_number(class="form-control form-control-lg") }}</p>
-                        </div> 
+                        {{ form.phone_number(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
                 <div class="form-check">

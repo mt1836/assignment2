@@ -7,17 +7,17 @@ from wtforms.validators import DataRequired, Length, EqualTo
 
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), Length(min=1, max=20)])
-    password = PasswordField('Password', validators=[DataRequired()])
+    username = StringField('Username', id='uname', validators=[DataRequired(), Length(min=1, max=20)])
+    password = PasswordField('Password', id='pword', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
-    phone_number = StringField('Phone Number', validators= [Length(max=11)])
+    phone_number = StringField('Phone Number', id='2fa', validators= [Length(max=11)])
     submit = SubmitField('Sign Up')
 
 
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), Length(min=1, max=20)])
-    password = PasswordField('Password', validators=[DataRequired()])
-    phone_number = StringField('2fa', validators= [Length(max=11)])
+    username = StringField('Username', id='uname', validators=[DataRequired(), Length(min=1, max=20)])
+    password = PasswordField('Password', id='pword', validators=[DataRequired()])
+    phone_number = StringField('2fa', id='2fa', validators= [Length(max=11)])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
 
