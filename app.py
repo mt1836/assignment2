@@ -9,11 +9,6 @@ app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
 
 
 @app.route("/")
-@app.route("/results")
-def results():
-    global input_text
-    global spellcheck_results
-    return render_template('results.html')
 
 
 @app.route("/register", methods=['GET', 'POST'])
