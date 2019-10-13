@@ -30,17 +30,17 @@ def register():
 def login():
     form = LoginForm()
     global userinfo
-    global failurelogin
+  #  global failurelogin
     global successlogin
     session.pop('user', None)
     if form.validate_on_submit():
         if form.phone_number.data == userinfo[form.username.data]['phone_number'] and form.password.data == userinfo[form.username.data]['password']:
             session['user'] = form.username.data
             successlogin = 'Success  You have been logged in!'
-            return render_template('login.html', id = 'result', title='Login', form=form, successlogin=successlogin)
+            return render_template('login.html', title='Login', form=form, successlogin=successlogin)
         else:
-            failurelogin = 'Failure Incorrect username, password or Two-Factor'
-            return render_template('login.html', id = 'result', title='Login', form=form, failurelogin=failurelogin)
+            successlogin = 'Failure Incorrect username, password or Two-Factor'
+            return render_template('login.html', title='Login', form=form, successlogin=successlogin)
     else:
         return render_template('login.html', title='Login', form=form)
 
