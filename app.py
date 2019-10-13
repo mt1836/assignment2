@@ -37,10 +37,10 @@ def login():
         if form.phone_number.data == userinfo[form.username.data]['phone_number'] and form.password.data == userinfo[form.username.data]['password']:
             session['user'] = form.username.data
             successlogin = 'Success  You have been logged in!'
-            return render_template('login.html', title='Login', form=form, successlogin=successlogin)
+            return render_template('login.html', id = 'result', title='Login', form=form, successlogin=successlogin)
         else:
             failurelogin = 'Failure Incorrect username, password or Two-Factor'
-            return render_template('login.html', title='Login', form=form, failurelogin=failurelogin)
+            return render_template('login.html', id = 'result', title='Login', form=form, failurelogin=failurelogin)
     else:
         return render_template('login.html', title='Login', form=form)
 
