@@ -12,9 +12,7 @@ app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
-    userinfo = None
-    successreg = None
-    failurereg = None
+    global userinfo
     if form.validate_on_submit():    
         userinfo = {form.username.data:{'username':form.username.data, 'password':form.password.data, 'phone_number':form.phone_number.data}}
         successreg = 'Success you have been successfully registered!'
@@ -28,7 +26,6 @@ def register():
 def login():
     form = LoginForm()
     global userinfo
-    result = None
     session.pop('user', None)
     if form.validate_on_submit():
         if form.phone_number.data == userinfo[form.username.data]['phone_number'] and form.password.data == userinfo[form.username.data]['password']:
