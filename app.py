@@ -30,19 +30,19 @@ def register():
 def login():
     form = LoginForm()
     global userinfo
-    global loginstatus
+    global result
     session.pop('user', None)
     if form.validate_on_submit():
         if form.phone_number.data == userinfo[form.username.data]['phone_number'] and form.password.data == userinfo[form.username.data]['password']:
             session['user'] = form.username.data
-            loginstatus = 'success'
-            return render_template('login.html', title='Login', form=form, loginstatus=loginstatus)
+            result = 'success'
+            return render_template('login.html', title='Login', form=form, result=result)
         elif form.password.data != userinfo[form.username.data]['password'] or form.username.data != userinfo[form.username.data]['username']:
-            loginstatus = 'Incorrect'
-            return render_template('login.html', title='Login', form=form, loginstatus=loginstatus)
+            result = 'Incorrect'
+            return render_template('login.html', title='Login', form=form, result=result)
         elif form.phone_number.data != userinfo[form.username.data]['phone_number']:
-            loginstatus = 'Two-factor failure'
-            return render_template('login.html', title='Login', form=form, loginstatus=loginstatus)
+            result = 'Two-factor failure'
+            return render_template('login.html', title='Login', form=form, result=result)
     else:
         return render_template('login.html', title='Login', form=form)
 
