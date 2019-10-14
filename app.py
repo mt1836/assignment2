@@ -6,9 +6,9 @@ from forms import RegistrationForm, LoginForm, SpellCheckForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
+userinfo = None
 
 @app.route("/")
-
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
