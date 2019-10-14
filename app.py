@@ -6,7 +6,7 @@ from forms import RegistrationForm, LoginForm, SpellCheckForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
-
+userinfo = None
 
 @app.route("/")
 
@@ -15,9 +15,8 @@ app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        global userinfo
-        successreg
-        failurereg
+        successreg = None
+        failurereg = None
         userinfo = {form.username.data:{'username':form.username.data, 'password':form.password.data, 'phone_number':form.phone_number.data}}
         successreg = 'Success you have been successfully registered!'
         return render_template('register.html', title='Register', form=form, successreg=successreg)
@@ -29,7 +28,6 @@ def register():
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-    global userinfo
     result = None
     session.pop('user', None)
     if form.validate_on_submit():
