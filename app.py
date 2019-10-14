@@ -12,7 +12,7 @@ app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
-    global userinfo
+    userinfo = None
     successreg = None
     failurereg = None
     if form.validate_on_submit():    
