@@ -9,6 +9,11 @@ python:
   - "nightly"  # nightly build
 # command to install dependencies
 install:
-  - pip install -r requirements.txt
+  - pip3 install -r requirements.txt
+  - pip3 install tox
+  - pip3 install tox-travis
+  - pip3 install coverage
+  - pip3 install bs4
 # command to run tests
 script:
+  - tox
