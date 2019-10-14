@@ -16,8 +16,8 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         global userinfo
-        global successreg
-        global failurereg
+        successreg
+        failurereg
         userinfo = {form.username.data:{'username':form.username.data, 'password':form.password.data, 'phone_number':form.phone_number.data}}
         successreg = 'Success you have been successfully registered!'
         return render_template('register.html', title='Register', form=form, successreg=successreg)
@@ -30,7 +30,7 @@ def register():
 def login():
     form = LoginForm()
     global userinfo
-    global result
+    result = None
     session.pop('user', None)
     if form.validate_on_submit():
         if form.phone_number.data == userinfo[form.username.data]['phone_number'] and form.password.data == userinfo[form.username.data]['password']:
