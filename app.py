@@ -6,7 +6,6 @@ from forms import RegistrationForm, LoginForm, SpellCheckForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
-userinfo = None
 
 @app.route("/")
 
@@ -14,6 +13,7 @@ userinfo = None
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
+    global userinfo
     if form.validate_on_submit():
         successreg = None
         failurereg = None
@@ -28,6 +28,7 @@ def register():
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    global userinfo
     result = None
     session.pop('user', None)
     if form.validate_on_submit():
