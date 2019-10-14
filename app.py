@@ -14,9 +14,9 @@ userinfo = None
 def register():
     form = RegistrationForm()
     global userinfo
-    if form.validate_on_submit():
-        successreg = None
-        failurereg = None
+    successreg = None
+    failurereg = None
+    if form.validate_on_submit():    
         userinfo = {form.username.data:{'username':form.username.data, 'password':form.password.data, 'phone_number':form.phone_number.data}}
         successreg = 'Success you have been successfully registered!'
         return render_template('register.html', title='Register', form=form, successreg=successreg)
