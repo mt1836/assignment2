@@ -6,6 +6,7 @@ from forms import RegistrationForm, LoginForm, SpellCheckForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
+userinfo = None
 
 @app.route("/")
 
@@ -27,15 +28,20 @@ def login():
     form = LoginForm()
     global userinfo
     session.pop('user', None)   
-    if form.validate_on_submit():
-        if form.phone_number.data == userinfo[form.username.data]['phone_number'] and form.password.data == userinfo[form.username.data]['password']:
+    if userinfo == None:
+        return redirect(url_for('register'))
+    elif form.validate_on_submit():
+        if userinfo.get(form.username.data) == None:
+            result = 'Incorrect'
+            return render_template('login.html', title='Login', form=form, result=result)
+        elif form.phone_number.data == (userinfo.get(form.username.data)).get('phone_number') and form.password.data == (userinfo.get(form.username.data)).get('password'):
             session['user'] = form.username.data
             result = 'success'
             return render_template('login.html', title='Login', form=form, result=result)
-        elif form.password.data != userinfo[form.username.data]['password'] or form.username.data != userinfo[form.username.data]['username']:
+        elif form.password.data != (userinfo.get(form.username.data)).get('password') or form.username.data != (userinfo.get(form.username.data)).get('username'):
             result = 'Incorrect'
             return render_template('login.html', title='Login', form=form, result=result)
-        elif form.phone_number.data != userinfo[form.username.data]['phone_number']:
+        elif form.phone_number.data != (userinfo.get(form.username.data)).get('phone_number'):
             result = 'Two-factor failure'
             return render_template('login.html', title='Login', form=form, result=result)
     else:
