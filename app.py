@@ -54,7 +54,6 @@ def spell_check():
     form = SpellCheckForm()
     global input_text
     global spellcheck_results
-    global username
     if g.user:
         if form.validate_on_submit():
             input_text = form.checktext.data
