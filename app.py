@@ -25,7 +25,7 @@ def register():
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-    global userinfo
+    #global userinfo
     session.pop('user', None)
     if form.validate_on_submit():
         if form.phone_number.data == userinfo[form.username.data]['phone_number'] and form.password.data == userinfo[form.username.data]['password']:
