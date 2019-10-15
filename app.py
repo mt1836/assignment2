@@ -49,8 +49,8 @@ def logout():
     return redirect(url_for('login'))
     
 
-@app.route("/spellcheck", methods=['GET', 'POST'])
-def spellcheck():
+@app.route("/spell_check", methods=['GET', 'POST'])
+def spell_check():
     form = SpellCheckForm()
     global input_text
     global spellcheck_results
