@@ -22,5 +22,5 @@ class LoginForm(FlaskForm):
 
 
 class SpellCheckForm(FlaskForm):
-    checktext = StringField('Enter Text to Spell Check', validators=[DataRequired()])
+    checktext = StringField('Input Text', id='inputtext' validators=[DataRequired()])
     submit = SubmitField('Submit')
