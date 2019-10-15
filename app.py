@@ -29,7 +29,8 @@ def login():
     global userinfo
     session.pop('user', None)   
     if userinfo == None:
-        return redirect(url_for('register'))
+        result = 'Incorrect'
+        return render_template('login.html', title='Login', form=form, result=result)
     elif form.validate_on_submit():
         if userinfo.get(form.username.data) == None:
             result = 'Incorrect'
