@@ -26,7 +26,7 @@ def register():
 def login():
     form = LoginForm()
     global userinfo
-    session.pop('user', None)
+    session.pop('user', None)   
     if form.validate_on_submit():
         if form.phone_number.data == userinfo[form.username.data]['phone_number'] and form.password.data == userinfo[form.username.data]['password']:
             session['user'] = form.username.data
@@ -40,7 +40,6 @@ def login():
             return render_template('login.html', title='Login', form=form, result=result)
     else:
         return render_template('login.html', title='Login', form=form)
-
 
 
 @app.route("/logout", methods=['GET'])
