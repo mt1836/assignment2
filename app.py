@@ -28,7 +28,7 @@ def login():
     global userinfo
     session.pop('user', None)
     if form.validate_on_submit():
-        if 1==1:#form.phone_number.data == userinfo[form.username.data]['phone_number']: #and form.password.data == userinfo[form.username.data]['password']:
+        if form.phone_number.data == userinfo[form.username.data]['phone_number'] and form.password.data == userinfo[form.username.data]['password']:
             session['user'] = form.username.data
             result = 'success'
             return render_template('login.html', title='Login', form=form, result=result)
