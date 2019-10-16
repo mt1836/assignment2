@@ -1,4 +1,4 @@
-import subprocess
+import subprocess, bcrypt
 from flask import Flask, render_template, url_for, flash, redirect, session, g, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
@@ -14,8 +14,11 @@ userinfo = None
 def register():
     form = RegistrationForm()
     global userinfo
+    global salt
     if form.validate_on_submit():    
-        userinfo = {form.username.data:{'username':form.username.data, 'password':form.password.data, 'phone_number':form.phone_number.data}}
+        salt = bcrypt.gensalt()
+        hashed = bcrypt.hashpw((form.password.data).encode('utf-8'),salt)
+        userinfo = {form.username.data:{'username':form.username.data, 'password':hashed, 'phone_number':form.phone_number.data}}
         successreg = 'Success you have been successfully registered!'
         return render_template('register.html', title='Register', form=form, successreg=successreg)
     else:
@@ -27,19 +30,21 @@ def register():
 def login():
     form = LoginForm()
     global userinfo
+    global salt
     session.pop('user', None)   
     if userinfo == None:
         result = 'Incorrect'
         return render_template('login.html', title='Login', form=form, result=result)
     elif form.validate_on_submit():
+        hashed_login = bcrypt.hashpw((form.password.data).encode('utf-8'),salt)
         if userinfo.get(form.username.data) == None:
             result = 'Incorrect'
             return render_template('login.html', title='Login', form=form, result=result)
-        elif form.phone_number.data == (userinfo.get(form.username.data)).get('phone_number') and form.password.data == (userinfo.get(form.username.data)).get('password'):
+        elif form.phone_number.data == (userinfo.get(form.username.data)).get('phone_number') and hashed_login == (userinfo.get(form.username.data)).get('password'):
             session['user'] = form.username.data
             result = 'success'
             return render_template('login.html', title='Login', form=form, result=result)
-        elif form.password.data != (userinfo.get(form.username.data)).get('password') or form.username.data != (userinfo.get(form.username.data)).get('username'):
+        elif hashed_login != (userinfo.get(form.username.data)).get('password') or form.username.data != (userinfo.get(form.username.data)).get('username'):
             result = 'Incorrect'
             return render_template('login.html', title='Login', form=form, result=result)
         elif form.phone_number.data != (userinfo.get(form.username.data)).get('phone_number'):
