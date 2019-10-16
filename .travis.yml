@@ -8,4 +8,5 @@ install:
 
 # command to run tests
 script:
+  - flask run
   - python3 apptest.py
