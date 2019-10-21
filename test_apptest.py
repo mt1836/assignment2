@@ -1,4 +1,4 @@
-import bs4, unittest, requests, mechanicalsoup
+import bs4, unittest, requests
 from app import *
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
