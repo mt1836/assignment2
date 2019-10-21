@@ -1,11 +1,12 @@
 import subprocess, bcrypt
-from flask import Flask, render_template, url_for, flash, redirect, session, g, request
+from flask import Flask, render_template, url_for, flash, redirect, session, g, request, make_response
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from forms import RegistrationForm, LoginForm, SpellCheckForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
+#app.config['WTF_CSRF_ENABLED'] = False
 userinfo = None
 
 @app.route("/")
@@ -15,15 +16,18 @@ def register():
     form = RegistrationForm()
     global userinfo
     global salt
-    if form.validate_on_submit():    
-        salt = bcrypt.gensalt()
-        hashed = bcrypt.hashpw((form.password.data).encode('utf-8'),salt)
-        userinfo = {form.username.data:{'username':form.username.data, 'password':hashed, 'phone_number':form.phone_number.data}}
-        successreg = 'Success you have been successfully registered!'
-        return render_template('register.html', title='Register', form=form, successreg=successreg)
-    else:
-        failurereg = 'Failure to register.  Please complete the required fields appropriately'
-        return render_template('register.html', title='Register', form=form, failurereg=failurereg)
+    
+    if request.method == 'POST':
+        if form.validate_on_submit():    
+            salt = bcrypt.gensalt()
+            hashed = bcrypt.hashpw((form.password.data).encode('utf-8'),salt)
+            userinfo = {form.username.data:{'username':form.username.data, 'password':hashed, 'phone_number':form.phone_number.data}}
+            regstatus = 'Success you have been successfully registered!'
+            return render_template('register.html', title='Register', form=form, regstatus=regstatus)
+        else:
+            regstatus = 'Failure to register.  Please complete the required fields appropriately'
+            return render_template('register.html', title='Register', form=form, regstatus=regstatus)
+    return render_template('register.html', title='Register', form=form)
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -56,6 +60,9 @@ def login():
 
 @app.route("/logout", methods=['GET'])
 def logout():
+    form = LoginForm()
+    if userinfo == None:
+        return render_template('login.html', title='Login', form=form)
     session.pop('user')
     return redirect(url_for('login'))
     
