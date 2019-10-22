@@ -19,15 +19,26 @@ def register():
     
     if request.method == 'POST':
         if form.validate_on_submit():    
-            salt = bcrypt.gensalt()
-            hashed = bcrypt.hashpw((form.password.data).encode('utf-8'),salt)
-            userinfo = {form.username.data:{'username':form.username.data, 'password':hashed, 'phone_number':form.phone_number.data}}
-            regstatus = 'Success you have been successfully registered!'
-            return render_template('register.html', title='Register', form=form, regstatus=regstatus)
+            if userinfo == None:
+                salt = bcrypt.gensalt()
+                hashed = bcrypt.hashpw((form.password.data).encode('utf-8'),salt)
+                userinfo = {form.username.data:{'username':form.username.data, 'password':hashed, 'phone_number':form.phone_number.data}}
+                regstatus = 'Success you have been successfully registered!'
+                return render_template('register.html', title='Register', form=form, regstatus=regstatus)
+            elif (userinfo.get(form.username.data)) == None:
+                salt = bcrypt.gensalt()
+                hashed = bcrypt.hashpw((form.password.data).encode('utf-8'),salt)
+                userinfo = {form.username.data:{'username':form.username.data, 'password':hashed, 'phone_number':form.phone_number.data}}
+                regstatus = 'Success you have been successfully registered!'
+                return render_template('register.html', title='Register', form=form, regstatus=regstatus)
+            else:
+                regstatus = 'Username already exists!'
+                return render_template('register.html', title='Register', form=form, regstatus=regstatus)
         else:
             regstatus = 'Failure to register.  Please complete the required fields appropriately'
             return render_template('register.html', title='Register', form=form, regstatus=regstatus)
-    return render_template('register.html', title='Register', form=form)
+    else:
+        return render_template('register.html', title='Register', form=form)
 
 
 @app.route("/login", methods=['GET', 'POST'])

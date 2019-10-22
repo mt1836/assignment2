@@ -49,7 +49,7 @@ class TestSpellFunctions(unittest.TestCase):
         spellpayload = {'checktext': 'Take a sad betta.', 'csrf_token':spellcsrf_token}
        # print(spellpayload)
         spellpost = client.post('http://localhost:5000/spell_check', data=spellpayload)
-        print(spellpost.text)
+        #print(spellpost.text)
         spellpostsoup = BeautifulSoup(spellpost.text, 'html.parser')
         spellpostinput = spellpostsoup.find_all('input')
         spellpost_csrf_token = spellpostinput[0]['value']
@@ -159,7 +159,7 @@ class TestSpellFunctions(unittest.TestCase):
         #print(initget.text)
         getinput = soupg.find_all('input')
         csrf_token = getinput[0]['value']
-        payload = {'username': 'batt', 'phone_number': '123123123', 'password': 'cry', 'csrf_token': csrf_token}
+        payload = {'username': 'michael', 'phone_number': '123123123', 'password': 'jordan', 'csrf_token': csrf_token}
         #print(payload)
         p = regclient.post('http://localhost:5000/register', data=payload)
         #print(p.text)
