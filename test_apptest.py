@@ -174,6 +174,46 @@ class TestSpellFunctions(unittest.TestCase):
         assert(reg_message == 'Success you have been successfully registered!')
 
 
+    def test_duplicatereg(self):
+        regclient = requests.Session()
+        initget = regclient.get('http://localhost:5000/register')
+        soupg = BeautifulSoup(initget.text, 'html.parser')
+        #print(initget.text)
+        getinput = soupg.find_all('input')
+        csrf_token = getinput[0]['value']
+        payload = {'username': 'jerry', 'phone_number': '123123123', 'password': 'stackhouse', 'csrf_token': csrf_token}
+        #print(payload)
+        p = regclient.post('http://localhost:5000/register', data=payload)
+        #print(p.text)
+        soupp = BeautifulSoup(p.text, 'html.parser')
+        postinput = soupp.find_all('input')
+        post_csrf_token = postinput[0]['value']
+        #print(payload['csrf_token'])
+        #print(post_csrf_token)
+        postoutput = soupp.find_all('p')
+        reg_message = postoutput[0].text
+        #print(postoutput)
+        assert(reg_message == 'Success you have been successfully registered!')
+        regclient = requests.Session()
+        initget = regclient.get('http://localhost:5000/register')
+        soupg = BeautifulSoup(initget.text, 'html.parser')
+        #print(initget.text)
+        getinput = soupg.find_all('input')
+        csrf_token = getinput[0]['value']
+        payload = {'username': 'jerry', 'phone_number': '123123123', 'password': 'stackhouse', 'csrf_token': csrf_token}
+        #print(payload)
+        p = regclient.post('http://localhost:5000/register', data=payload)
+        #print(p.text)
+        soupp = BeautifulSoup(p.text, 'html.parser')
+        postinput = soupp.find_all('input')
+        post_csrf_token = postinput[0]['value']
+        #print(payload['csrf_token'])
+        #print(post_csrf_token)
+        postoutput = soupp.find_all('p')
+        reg_message = postoutput[0].text
+        #print(postoutput)
+        assert(reg_message == 'Username already exists!')
+        
     def test_pagesxist(self):
         res_my_url_register = requests.get(my_url_register)
         res_my_url_login = requests.get(my_url_login)

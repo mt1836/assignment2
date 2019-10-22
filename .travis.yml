@@ -14,3 +14,5 @@ install:
 script:
   - flask run &
   - pytest
+
+  userinfo = {0:{'username':0,'password':0,'phone_number':0}}
