@@ -52,7 +52,7 @@ class TestSpellFunctions(unittest.TestCase):
         #print(spellpost.text)
         spellpostsoup = BeautifulSoup(spellpost.text, 'html.parser')
         spellpostinput = spellpostsoup.find_all('input')
-        spellpost_csrf_token = spellpostsoup.find('input', {'name': 'csrf_token'}).get('value') #spellpost_csrf_token = spellpostinput[0]['value']
+        #spellpost_csrf_token = spellpostsoup.find('input', {'name': 'csrf_token'}).get('value') #spellpost_csrf_token = spellpostinput[0]['value']
         #print(spellpayload['csrf_token'])
         spellpostinput = spellpostsoup.find_all('p')
         #print(spellpostinput)

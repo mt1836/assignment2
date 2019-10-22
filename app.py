@@ -3,7 +3,6 @@ from flask import Flask, render_template, url_for, flash, redirect, session, g, 
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from forms import RegistrationForm, LoginForm, SpellCheckForm
-from werkzeug.urls import url_encode
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
