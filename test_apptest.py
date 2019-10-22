@@ -21,8 +21,8 @@ class TestSpellFunctions(unittest.TestCase):
         regpostsoup = BeautifulSoup(regpost.text, 'html.parser')
         regpostinput = regpostsoup.find_all('input')
         regpost_csrf_token = regpostinput[0]['value']
-        print(regpayload['csrf_token'])
-        print(regpost_csrf_token)
+        #print(regpayload['csrf_token'])
+        #print(regpost_csrf_token)
         #loginclient = requests.Session()
         loginget = client.get('http://localhost:5000/login')
         logingetsoup = BeautifulSoup(loginget.text, 'html.parser')
@@ -36,8 +36,8 @@ class TestSpellFunctions(unittest.TestCase):
         loginpostsoup = BeautifulSoup(loginpost.text, 'html.parser')
         loginpostinput = loginpostsoup.find_all('input')
         loginpost_csrf_token = loginpostinput[0]['value']
-        print(loginpayload['csrf_token'])
-        print(loginpost_csrf_token)
+        #print(loginpayload['csrf_token'])
+        #print(loginpost_csrf_token)
         loginpostoutput = loginpostsoup.find_all('p')
         reg_message = loginpostoutput[0].text
        # print(spellpostoutput)
@@ -53,10 +53,10 @@ class TestSpellFunctions(unittest.TestCase):
         spellpostsoup = BeautifulSoup(spellpost.text, 'html.parser')
         spellpostinput = spellpostsoup.find_all('input')
         spellpost_csrf_token = spellpostinput[0]['value']
-        print(spellpayload['csrf_token'])
-        print(spellpost_csrf_token)
+        #print(spellpayload['csrf_token'])
+        #print(spellpost_csrf_token)
         spellpostinput = spellpostsoup.find_all('p')
-        print(spellpostinput)
+        #print(spellpostinput)
         spell_message = spellpostinput[1].text
         assert(spell_message == 'Your misspelled words: sogn, skyn, betta')
     
