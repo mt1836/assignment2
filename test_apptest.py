@@ -46,10 +46,10 @@ class TestSpellFunctions(unittest.TestCase):
        # print(regpost.text)
         getspellinput = spellgetsoup.find_all('input')
         spellcsrf_token = getspellinput[0]['value']
-        spellpayload = {'checktext': 'Take a sad #$%sogn and make it&& better. Remember to let her under your skyn, then you begin to make it betta.', 'csrf_token':spellcsrf_token}
+        spellpayload = {'checktext': 'Take a sad betta.', 'csrf_token':spellcsrf_token}
        # print(spellpayload)
         spellpost = client.post('http://localhost:5000/spell_check', data=spellpayload)
-        #print(spellpost.text)
+        print(spellpost.text)
         spellpostsoup = BeautifulSoup(spellpost.text, 'html.parser')
         spellpostinput = spellpostsoup.find_all('input')
         spellpost_csrf_token = spellpostinput[0]['value']
@@ -58,7 +58,7 @@ class TestSpellFunctions(unittest.TestCase):
         spellpostinput = spellpostsoup.find_all('p')
         #print(spellpostinput)
         spell_message = spellpostinput[1].text
-        assert(spell_message == 'Your misspelled words: sogn, skyn, betta')
+        assert(spell_message == 'Your misspelled words: betta')
     
     
     def test_loginsuccess(self):
