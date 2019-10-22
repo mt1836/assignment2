@@ -214,6 +214,7 @@ class TestSpellFunctions(unittest.TestCase):
         #print(postoutput)
         assert(reg_message == 'Username already exists!')
         
+        
     def test_pagesxist(self):
         res_my_url_register = requests.get(my_url_register)
         res_my_url_login = requests.get(my_url_login)
