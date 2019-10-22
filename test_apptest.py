@@ -52,10 +52,12 @@ class TestSpellFunctions(unittest.TestCase):
         #print(spellpost.text)
         spellpostsoup = BeautifulSoup(spellpost.text, 'html.parser')
         spellpostinput = spellpostsoup.find_all('input')
-        #spellpost_csrf_token = spellpostsoup.find('input', {'name': 'csrf_token'}).get('value') #spellpost_csrf_token = spellpostinput[0]['value']
+        spellpost_csrf_token = spellpostinput[0]['value']
+        #print(spellpostinput)
+        spellpost_csrf_token = spellpostsoup.find('input', {'name': 'csrf_token'}).get('value')
         #print(spellpayload['csrf_token'])
         spellpostinput = spellpostsoup.find_all('p')
-        #print(spellpostinput)
+        #print(spellpost_csrf_token)
         spell_message = spellpostinput[1].text
         assert(spell_message == 'Your misspelled words: betta')
     
